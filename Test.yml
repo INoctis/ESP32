@@ -1,0 +1,149 @@
+esphome:
+  name: esp32-s3
+  friendly_name: ESP32-S3
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: ${api_key}
+
+ota:
+  - platform: esphome
+    password: ${wifi_password}
+
+web_server:
+
+wifi:
+  ssid: ${wifi_ssid}
+  password: ${wifi_password}
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Esp32-S3"
+    password: !secret wifi_password
+
+captive_portal:
+  
+sensor:
+  - platform: dht
+    model: "DHT11"
+    pin: GPIO21
+    temperature:
+      id: "temperature"
+      name: "DHT11 Temperature"
+    humidity:
+      id: "humidity"
+      name: "DHT11 Humidity"
+      # on_value_range:
+      #   - above: 65.0
+      #     then:
+      #       - switch.turn_on: dehumidifier1
+      #   - below: 50.0
+      #     then:
+      #       - switch.turn_off: dehumidifier1
+    update_interval: 10s
+
+light:
+  - platform: monochromatic
+    name: "Red LED"
+    output: output_component1
+    id: red_led
+
+  - platform: monochromatic
+    name: "Yellow LED"
+    output: output_component2
+    id: yellow_led
+
+output:
+  - platform: ledc
+    id: output_component1
+    pin: GPIO20
+
+  - platform: ledc
+    id: output_component2
+    pin: GPIO19
+
+binary_sensor:
+  - platform: gpio
+    pin: 
+      number: GPIO47
+      mode: INPUT_PULLUP
+      inverted: True
+    name: Button
+    on_press:
+      - light.toggle: red_led
+      - delay: 2s
+      - light.toggle: yellow_led
+
+
+# https://esphome.io/automations/actions/
+
+# on_...:
+#   then:
+#     - if:
+#         condition:
+#           lambda: 'return id(some_sensor).state < 30;'
+#         then:
+#           - logger.log: "The sensor value is below 30!"
+#           - light.turn_on: my_light
+#           - delay: 5s
+#         else:
+#           - logger.log: "The sensor value is above 30!"
+#     - light.turn_off: my_light
+
+# on_...:
+#   - while:
+#       condition:
+#         binary_sensor.is_on: some_binary_sensor
+#       then:
+#       - logger.log: "Still executing"
+#       - light.toggle: some_light
+#       - delay: 5s
+
+# on_...:
+#   - logger.log: "Waiting for binary sensor"
+#   - wait_until:
+#       condition:
+#         binary_sensor.is_on: some_binary_sensor
+#       timeout: 8s
+#   - logger.log: "Binary sensor might be ready"
+
+# on_...:
+#   then:
+#     - component.suspend: my_component
+#     - component.resume: my_component
+#     - component.update: my_component
+
+# on_...:
+#   then:
+#     - if:
+#         condition:
+#           # Same syntax for `and` as well as `xor` conditions
+#           or:
+#             - binary_sensor.is_on: some_binary_sensor
+#             - binary_sensor.is_on: other_binary_sensor
+#         # ...
+#     - if:
+#         any:
+#           - not:
+#               binary_sensor.is_off: some_binary_sensor
+#           - binary_sensor.is_on: some_other_sensor
+
+# on_...:
+#   if:
+#     condition:
+#       for:
+#         time: 5min
+#         condition:
+#           api.connected:
+#     then:
+#       - logger.log: API has stayed connected for at least 5 minutes!
+
