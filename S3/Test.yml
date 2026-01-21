@@ -33,6 +33,7 @@ sensor:
       name: "MPU6050 Gyro z"
     temperature:
       name: "MPU6050 Temperature"
+    update_interval: 1s
 
 i2c:
   - id: bus_a
