@@ -17,6 +17,13 @@ sensor:
       #       - switch.turn_off: dehumidifier1
     update_interval: 10s
 
+  - platform: dallas_temp
+    pin: GPIO13
+    temperature:
+      id: "temperature"
+      name: "DS18B20 Temperature"
+    update_interval: 5s
+
 light:
   - platform: monochromatic
     name: "Red LED"
