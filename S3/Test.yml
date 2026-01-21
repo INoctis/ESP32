@@ -18,11 +18,14 @@ sensor:
     update_interval: 10s
 
   - platform: dallas_temp
-    pin: GPIO13
-    temperature:
-      id: "temperature"
-      name: "DS18B20 Temperature"
+    name: "DS18B20 Temperature"
     update_interval: 5s
+    one_wire_id: OWTemp
+
+one_wire:
+  - platform: gpio
+    pin: GPIO13
+    id: OWTemp
 
 light:
   - platform: monochromatic
