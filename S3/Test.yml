@@ -35,7 +35,7 @@ sensor:
       #   - below: 50.0
       #     then:
       #       - switch.turn_off: dehumidifier1
-    update_interval: 5s
+    update_interval: ${upd_frq}
 
 # light:
 #   - platform: monochromatic
@@ -56,6 +56,12 @@ sensor:
 #   - platform: ledc
 #     id: output_component2
 #     pin: GPIO14
+
+button:
+  - platform: template
+    name: "Template Button"
+    on_press:
+      - logger.log: Button Pressed
 
 binary_sensor:
   - platform: gpio
