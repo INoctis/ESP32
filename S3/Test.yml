@@ -2,6 +2,7 @@ sensor:
   - platform: dht
     model: "DHT11"
     pin: GPIO21
+    id: sensor_dht11
     temperature:
       id: "temperature"
       name: "DHT11 Temperature"
@@ -15,7 +16,7 @@ sensor:
       #   - below: 50.0
       #     then:
       #       - switch.turn_off: dehumidifier1
-    update_interval: 30s
+    update_interval: ${upd_frq}
 
 light:
   - platform: monochromatic
@@ -45,6 +46,7 @@ binary_sensor:
       inverted: True
     name: Button
     on_press:
-      - light.toggle: red_led
-      - delay: 0.5s
-      - light.toggle: yellow_led
+      - component.update: sensor_dht11
+      # - light.toggle: red_led
+      # - delay: 0.5s
+      # - light.toggle: yellow_led
