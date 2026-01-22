@@ -17,26 +17,45 @@ sensor:
       #     then:
       #       - switch.turn_off: dehumidifier1
     update_interval: ${upd_frq}
-
-light:
-  - platform: monochromatic
-    name: "Red LED"
-    output: output_component1
-    id: red_led
-
-  - platform: monochromatic
-    name: "Yellow LED"
-    output: output_component2
-    id: yellow_led
-
-output:
-  - platform: ledc
-    id: output_component1
-    pin: GPIO13
-
-  - platform: ledc
-    id: output_component2
+    
+  - platform: dht
+    model: "DHT11"
     pin: GPIO14
+    id: sensor_dht11_2
+    temperature:
+      id: "temperature_2"
+      name: "DHT11 Temperature 2"
+    humidity:
+      id: "humidity_2"
+      name: "DHT11 Humidity 2"
+      # on_value_range:
+      #   - above: 65.0
+      #     then:
+      #       - switch.turn_on: dehumidifier1
+      #   - below: 50.0
+      #     then:
+      #       - switch.turn_off: dehumidifier1
+    update_interval: 5s
+
+# light:
+#   - platform: monochromatic
+#     name: "Red LED"
+#     output: output_component1
+#     id: red_led
+
+#   - platform: monochromatic
+#     name: "Yellow LED"
+#     output: output_component2
+#     id: yellow_led
+
+# output:
+#   - platform: ledc
+#     id: output_component1
+#     pin: GPIO13
+
+#   - platform: ledc
+#     id: output_component2
+#     pin: GPIO14
 
 binary_sensor:
   - platform: gpio
