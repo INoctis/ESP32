@@ -37,6 +37,25 @@ sensor:
       #       - switch.turn_off: dehumidifier1
     update_interval: ${upd_frq}
 
+infrared:
+  # IR transmitter instance
+  - platform: ir_rf_proxy
+    name: IR Proxy Transmitter
+    id: ir_proxy_tx
+    remote_transmitter_id: ir_tx
+    carrier_duty_percent: 50%
+  # IR receiver instance
+  - platform: ir_rf_proxy
+    name: IR Proxy Receiver
+    id: ir_proxy_rx
+    remote_receiver_id: ir_rx
+
+remote_receiver:
+  pin: GPIO13
+  dump: all
+  # id: ir_receiver
+  
+
 # light:
 #   - platform: monochromatic
 #     name: "Red LED"
