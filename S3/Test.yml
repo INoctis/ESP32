@@ -1,3 +1,6 @@
+substitutions:
+  upd_frq: 5s
+
 sensor:
   - platform: dht
     model: "DHT11"
