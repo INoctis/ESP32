@@ -43,7 +43,6 @@ infrared:
     name: IR Proxy Transmitter
     id: ir_proxy_tx
     remote_transmitter_id: ir_tx
-    carrier_duty_percent: 50%
   # IR receiver instance
   - platform: ir_rf_proxy
     name: IR Proxy Receiver
