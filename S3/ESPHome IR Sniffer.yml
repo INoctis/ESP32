@@ -1,0 +1,41 @@
+# https://www.youtube.com/watch?v=ckXplzLgLZw
+
+# ESPHome YAML Config to Sniff IR Codes
+remote_receiver:
+  pin: 
+    number: D5
+    inverted: true
+  dump: all
+  tolerance: 25%
+
+  
+# ESPHome YAML Config to test IR receiver
+binary_sensor:
+  - platform: remote_receiver
+    name: "Input Received"
+    pronto:
+      data: "0000 006D 0024 0000 0045 001F 0020 003E 001F 001F 0020 003E 0020 001F 0020 001F 003F 001F 001F 005E 00FB 005D 001F 00DA 0020 003E 00DC 001E 0020 003E 0020 00BA 0020 005D 00BC 001F 003F 003E 0020 009B 0021 007C 009D 001F 005F 003E 005F 003D 0040 007B 011A 003E 0040 001D 0040 003D 0040 003C 009D 001F 0021 001D 0020 003E 0021 0136 0020 003D 0060 001D 0040 003D 0040 009B 0021 0181"
+      delta: 250
+    on_press:
+      then:
+        - script.execute: flash_led
+
+script:
+  - id: flash_led
+    mode: restart
+    then:
+      - repeat:
+          count: 3
+          then:
+            - switch.turn_on: led
+            - delay: 100ms
+            - switch.turn_off: led
+            - delay: 100ms
+
+switch:
+  - platform: gpio
+    id: led
+    pin: D4
+    internal: true
+    inverted: true
+    restore_mode: ALWAYS_OFF
