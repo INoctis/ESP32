@@ -9,115 +9,62 @@ remote_transmitter:
 
 switch:
   - platform: template
-  name: "IR Demo"
-  restore_mode: ALWAYS_OFF
-  optimistic: True
-  turn_on_action:
-    then:
-      - remote_transmitter.transmit_pioneer:
-        rc_code_1: 0xA512
-  turn_off_action:
-    then:
-      - remote_transmitter.transmit_pioneer:
-        rc_code_1: 0xA5D6
+    name: "IR Demo"
+    restore_mode: ALWAYS_OFF
+    optimistic: True
+    turn_on_action:
+      then:
+        - remote_transmitter.transmit_pioneer:
+          rc_code_1: 0xA512
+    turn_off_action:
+      then:
+        - remote_transmitter.transmit_pioneer:
+          rc_code_1: 0xA5D6
 
-# button:
-#   - platform: template
-#     name: "IR Transmitter Button"
-#     on_press:
-#       - remote_transmitter.transmit_raw:
-#           carrier_frequency: 38kHz
-#           code: ""
-#       - logger.log: "IR Button Pressed"
-  
+# remote_receiver:
+#   pin: 
+#     number: GPIO13
+#     inverted: true
+#   dump: all
+#   # Settings to optimize recognition of RF devices
+#   tolerance: 25%
 
-
-
-remote_receiver:
-  pin: 
-    number: GPIO13
-    inverted: true
-  dump: all
-  # Settings to optimize recognition of RF devices
-  tolerance: 25%
-
-sensor:
-  - platform: dht
-    model: "DHT11"
-    pin: GPIO21
-    id: sensor_dht11
-    temperature:
-      id: "temperature"
-      name: "DHT11 Temperature"
-    humidity:
-      id: "humidity"
-      name: "DHT11 Humidity"
-      # on_value_range:
-      #   - above: 65.0
-      #     then:
-      #       - switch.turn_on: dehumidifier1
-      #   - below: 50.0
-      #     then:
-      #       - switch.turn_off: dehumidifier1
-    update_interval: ${upd_frq}
+# sensor:
+#   - platform: dht
+#     model: "DHT11"
+#     pin: GPIO21
+#     id: sensor_dht11
+#     temperature:
+#       id: "temperature"
+#       name: "DHT11 Temperature"
+#     humidity:
+#       id: "humidity"
+#       name: "DHT11 Humidity"
+#       # on_value_range:
+#       #   - above: 65.0
+#       #     then:
+#       #       - switch.turn_on: dehumidifier1
+#       #   - below: 50.0
+#       #     then:
+#       #       - switch.turn_off: dehumidifier1
+#     update_interval: ${upd_frq}
     
-  - platform: dht
-    model: "DHT11"
-    pin: GPIO14
-    id: sensor_dht11_2
-    temperature:
-      id: "temperature_2"
-      name: "DHT11 Temperature 2"
-    humidity:
-      id: "humidity_2"
-      name: "DHT11 Humidity 2"
-      # on_value_range:
-      #   - above: 65.0
-      #     then:
-      #       - switch.turn_on: dehumidifier1
-      #   - below: 50.0
-      #     then:
-      #       - switch.turn_off: dehumidifier1
-    update_interval: ${upd_frq}
-
-# light:
-#   - platform: monochromatic
-#     name: "Red LED"
-#     output: output_component1
-#     id: red_led
-
-#   - platform: monochromatic
-#     name: "Yellow LED"
-#     output: output_component2
-#     id: yellow_led
-
-# output:
-#   - platform: ledc
-#     id: output_component1
-#     pin: GPIO13
-
-#   - platform: ledc
-#     id: output_component2
+#   - platform: dht
+#     model: "DHT11"
 #     pin: GPIO14
+#     id: sensor_dht11_2
+#     temperature:
+#       id: "temperature_2"
+#       name: "DHT11 Temperature 2"
+#     humidity:
+#       id: "humidity_2"
+#       name: "DHT11 Humidity 2"
+#       # on_value_range:
+#       #   - above: 65.0
+#       #     then:
+#       #       - switch.turn_on: dehumidifier1
+#       #   - below: 50.0
+#       #     then:
+#       #       - switch.turn_off: dehumidifier1
+#     update_interval: ${upd_frq}
 
-# button:
-#   - platform: template
-#     name: "Template Button"
-#     on_press:
-#       - logger.log: Button Pressed
-
-# binary_sensor:
-#   - platform: gpio
-#     pin: 
-#       number: GPIO47
-#       mode: INPUT_PULLUP
-#       inverted: True
-#     name: Button
-#     on_press:
-#       - remote_transmitter.transmit_raw:
-#           code: ""
-#       - logger.log: IR Button Pressed
-      # - component.update: sensor_dht11
-      # - light.toggle: red_led
-      # - delay: 0.5s
-      # - light.toggle: yellow_led
