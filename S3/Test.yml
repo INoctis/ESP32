@@ -20,7 +20,7 @@ switch:
     turn_off_action:
       then:
         - remote_transmitter.transmit_pioneer:
-            rc_code_1: 0xA5D6
+            rc_code_1: 0xA512
 
 remote_receiver:
   pin: 
