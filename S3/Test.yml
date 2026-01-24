@@ -18,8 +18,7 @@ binary_sensor:
   - platform: remote_receiver
     name: "Input Received"
     pioneer:
-      data: rc_code_X=0xA512
-      delta: 250
+      rc_code_1: 0xA512
     on_press:
       then:
         - script.execute: flash_led
