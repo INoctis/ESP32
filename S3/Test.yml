@@ -20,7 +20,7 @@ binary_sensor:
       number: GPIO47
       mode: INPUT_PULLUP
       inverted: True
-    name: Button
+    name: Physical Button
     on_press:
       - remote_transmitter.transmit_pioneer:
           rc_code_1: 0xA512
