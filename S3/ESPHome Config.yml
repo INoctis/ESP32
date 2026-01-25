@@ -55,10 +55,8 @@ sensor:
 captive_portal:
 
 packages:
-  # # shorthand form github://username/repository/[folder/]file-path.yml[@branch-or-tag]
-  # remote_package_shorthand: github://INoctis/ESP32-S3-Testing/Test.yml
   remote_package_files:
-    url: https://github.com/INoctis/ESP32-S3-Testing/
-    files: Test.yml # optional; if not specified, all files will be included
+    url: https://github.com/INoctis/ESP32/
+    files: S3/Test.yml # optional; if not specified, all files will be included
     ref: main # optional
-    refresh: 60s # optional
+    refresh: 1s # optional
