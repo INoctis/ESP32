@@ -37,6 +37,9 @@ substitutions:
   VSX-520_phase: [0xA55A, 0xA5CB]
   VSX-520_s_retriever: [0xA55A, 0xA5CD]
   VSX-520_signal_sel: [0xA556, 0xA503]
+
+  # Middle Section
+  VSX-520_mute: 0xA512
   
   # TV Control Section
   VSX-520_tv_power: 0x551C
