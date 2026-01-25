@@ -35,42 +35,25 @@ remote_receiver:
   # Settings to optimize recognition of RF devices
   tolerance: 25%
 
-# sensor:
-#   - platform: dht
-#     model: "DHT11"
-#     pin: GPIO21
-#     id: sensor_dht11
-#     temperature:
-#       id: "temperature"
-#       name: "DHT11 Temperature"
-#     humidity:
-#       id: "humidity"
-#       name: "DHT11 Humidity"
-#       # on_value_range:
-#       #   - above: 65.0
-#       #     then:
-#       #       - switch.turn_on: dehumidifier1
-#       #   - below: 50.0
-#       #     then:
-#       #       - switch.turn_off: dehumidifier1
-#     update_interval: ${upd_frq}
+sensor:
+  - platform: dht
+    model: "DHT11"
+    pin: GPIO21
+    id: sensor_dht11
+    temperature:
+      id: "temperature"
+      name: "DHT11 Temperature"
+    humidity:
+      id: "humidity"
+      name: "DHT11 Humidity"
+      # on_value_range:
+      #   - above: 65.0
+      #     then:
+      #       - switch.turn_on: dehumidifier1
+      #   - below: 50.0
+      #     then:
+      #       - switch.turn_off: dehumidifier1
+    update_interval: ${upd_frq}
     
-#   - platform: dht
-#     model: "DHT11"
-#     pin: GPIO14
-#     id: sensor_dht11_2
-#     temperature:
-#       id: "temperature_2"
-#       name: "DHT11 Temperature 2"
-#     humidity:
-#       id: "humidity_2"
-#       name: "DHT11 Humidity 2"
-#       # on_value_range:
-#       #   - above: 65.0
-#       #     then:
-#       #       - switch.turn_on: dehumidifier1
-#       #   - below: 50.0
-#       #     then:
-#       #       - switch.turn_off: dehumidifier1
-#     update_interval: ${upd_frq}
+
 
