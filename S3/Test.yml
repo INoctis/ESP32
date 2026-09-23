@@ -25,8 +25,8 @@ binary_sensor:
     name: Physical Button
     on_press:
       - remote_transmitter.transmit_pioneer:
-          rc_code_1: ${${remote}_mute}
-          rc_code_2: ${${remote}_mute}
+          rc_code_1: 0xA512
+          rc_code_2: 0xA512
 
 remote_receiver:
   id: IR_Receiver
