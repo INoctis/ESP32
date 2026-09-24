@@ -3,10 +3,6 @@ substitutions:
   ir_dump: "pioneer"
   remote: "VSX-520"
 
-remote_transmitter:
-  pin: GPIO12
-  carrier_duty_percent: 50%
-
 button:
   - platform: template
     name: "Mute"
@@ -36,6 +32,20 @@ remote_receiver:
   dump: ${ir_dump}
   # Settings to optimize recognition of RF devices
   tolerance: 25%
+
+remote_transmitter:
+  id: IR_Transmitter
+  pin: GPIO12
+  carrier_duty_percent: 50%
+
+infrared:
+  - platform: ir_rf_proxy
+    name: IR Transmitter
+    remote_transmitter_id: IR_Transmitter
+  - platform: ir_rf_proxy
+    name: IR Receiver
+    receiver_frequency: 38kHz
+    remote_receiver_id: IR_Receiver
 
 sensor:
   - platform: dht
