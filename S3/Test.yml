@@ -7,12 +7,26 @@ button:
   - platform: template
     name: "Mute"
     on_press:
+      - binary_sensor.template.publish:
+          id: ir_transmitting
+          state: ON
+      - script.execute: update_ir_led
       - remote_transmitter.transmit_pioneer:
           rc_code_1: 0xA512
           repeat:
             times: 2
+      - binary_sensor.template.publish:
+          id: ir_transmitting
+          state: OFF
+      - script.execute: update_ir_led
 
-# binary_sensor:
+binary_sensor:
+  - platform: template
+    id: ir_receiving
+    internal: true
+  - platform: template
+    id: ir_transmitting
+    internal: true
 #   - platform: gpio
 #     pin: 
 #       number: GPIO47
@@ -26,12 +40,22 @@ button:
 
 remote_receiver:
   id: IR_Receiver
-  pin: 
+  pin:
     number: GPIO13
     inverted: true
   dump: ${ir_dump}
-  # Settings to optimize recognition of RF devices
   tolerance: 25%
+  on_raw:
+    then:
+      - binary_sensor.template.publish:
+          id: ir_receiving
+          state: ON
+      - script.execute: update_ir_led
+      - delay: 250ms
+      - binary_sensor.template.publish:
+          id: ir_receiving
+          state: OFF
+      - script.execute: update_ir_led
 
 remote_transmitter:
   id: IR_Transmitter
@@ -67,5 +91,64 @@ sensor:
       #       - switch.turn_off: dehumidifier1
     update_interval: ${upd_frq}
     
+output:
+  - platform: ledc
+    id: rgb_gpio_16
+    pin: GPIO16
+  - platform: ledc
+    id: rgb_gpio_18
+    pin: GPIO18
+  - platform: ledc
+    id: rgb_gpio_17
+    pin: GPIO17
+
+light:
+  - platform: rgb
+    name: RGB Light
+    id: light_rgb_1
+    blue: rgb_gpio_16
+    green: rgb_gpio_18
+    red: rgb_gpio_17
+
+script:
+  - id: update_ir_led
+    mode: restart
+    then:
+      - if:
+          condition:
+            and:
+              - binary_sensor.is_on: ir_receiving
+              - binary_sensor.is_on: ir_transmitting
+          then:
+            - light.turn_on:
+                id: light_rgb_1
+                red: 0%
+                green: 0%
+                blue: 100%
+                brightness: 100%
+          else:
+            - if:
+                condition:
+                  binary_sensor.is_on: ir_receiving
+                then:
+                  - light.turn_on:
+                      id: light_rgb_1
+                      red: 100%
+                      green: 0%
+                      blue: 0%
+                      brightness: 100%
+                else:
+                  - if:
+                      condition:
+                        binary_sensor.is_on: ir_transmitting
+                    then:
+                      - light.turn_on:
+                          id: light_rgb_1
+                          red: 0%
+                          green: 100%
+                          blue: 0%
+                          brightness: 100%
+                    else:
+                      - light.turn_off: light_rgb_1
 
 
