@@ -95,12 +95,15 @@ output:
   - platform: ledc
     id: rgb_gpio_16
     pin: GPIO16
+    inverted: true
   - platform: ledc
     id: rgb_gpio_18
     pin: GPIO18
+    inverted: true
   - platform: ledc
     id: rgb_gpio_17
     pin: GPIO17
+    inverted: true
 
 light:
   - platform: rgb
