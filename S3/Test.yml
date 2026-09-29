@@ -1,6 +1,6 @@
 substitutions:
   upd_frq: 60s
-  ir_dump: "all"
+  ir_dump: "pioneer"
   remote: "VSX-520"
   led_dur: 250ms
 
