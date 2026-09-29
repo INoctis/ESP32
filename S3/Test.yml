@@ -49,15 +49,19 @@ remote_receiver:
   tolerance: 25%
   on_raw:
     then:
-      - binary_sensor.template.publish:
-          id: ir_receiving
-          state: ON
-      - script.execute: update_ir_led
-      - delay: ${led_dur}
-      - binary_sensor.template.publish:
-          id: ir_receiving
-          state: OFF
-      - script.execute: update_ir_led
+      - if:
+          condition:
+            binary_sensor.is_off: ir_transmitting
+          then:
+            - binary_sensor.template.publish:
+                id: ir_receiving
+                state: ON
+            - script.execute: update_ir_led
+            - delay: ${led_dur}
+            - binary_sensor.template.publish:
+                id: ir_receiving
+                state: OFF
+            - script.execute: update_ir_led
 
 remote_transmitter:
   id: IR_Transmitter
