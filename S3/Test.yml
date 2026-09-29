@@ -8,9 +8,9 @@ button:
   - platform: template
     name: "Mute"
     on_press:
-      - binary_sensor.template.publish:
-          id: ir_transmitting
-          state: ON
+      # - binary_sensor.template.publish:
+      #     id: ir_transmitting
+      #     state: ON
       - light.turn_on:
           id: light_rgb_1
           red: 0%
@@ -26,9 +26,9 @@ button:
       - light.turn_off:
           id: light_rgb_1
           transition_length: 0s
-      - binary_sensor.template.publish:
-          id: ir_transmitting
-          state: OFF
+      # - binary_sensor.template.publish:
+      #     id: ir_transmitting
+      #     state: OFF
 
 binary_sensor:
   - platform: template
@@ -56,23 +56,23 @@ remote_receiver:
     inverted: true
   dump: ${ir_dump}
   tolerance: 25%
-  on_raw:
-    then:
-      - if:
-          condition:
-            binary_sensor.is_off: ir_transmitting
-          then:
-            - light.turn_on:
-                id: light_rgb_1
-                red: 100%
-                green: 0%
-                blue: 0%
-                brightness: 100%
-                transition_length: 0s
-            - delay: ${led_dur}
-            - light.turn_off:
-                id: light_rgb_1
-                transition_length: 0s
+  # on_raw:
+  #   then:
+  #     - if:
+  #         condition:
+  #           binary_sensor.is_off: ir_transmitting
+  #         then:
+  #           - light.turn_on:
+  #               id: light_rgb_1
+  #               red: 100%
+  #               green: 0%
+  #               blue: 0%
+  #               brightness: 100%
+  #               transition_length: 0s
+  #           - delay: ${led_dur}
+  #           - light.turn_off:
+  #               id: light_rgb_1
+  #               transition_length: 0s
 
 remote_transmitter:
   id: IR_Transmitter
