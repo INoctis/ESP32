@@ -2,6 +2,7 @@ substitutions:
   upd_frq: 60s
   ir_dump: "pioneer"
   remote: "VSX-520"
+  led_dur: 250ms
 
 button:
   - platform: template
@@ -51,7 +52,7 @@ remote_receiver:
           id: ir_receiving
           state: ON
       - script.execute: update_ir_led
-      - delay: 250ms
+      - delay: ${led_dur}
       - binary_sensor.template.publish:
           id: ir_receiving
           state: OFF
@@ -126,6 +127,11 @@ script:
                 green: 0%
                 blue: 100%
                 brightness: 100%
+                transition_length: 0s
+            - delay: ${led_dur}
+            - light.turn_off:
+                id: light_rgb_1
+                transition_length: 0s
       - if:
           condition:
             and:
@@ -138,6 +144,11 @@ script:
                 green: 0%
                 blue: 0%
                 brightness: 100%
+                transition_length: 0s
+            - delay: ${led_dur}
+            - light.turn_off:
+                id: light_rgb_1
+                transition_length: 0s
       - if:
           condition:
             and:
@@ -150,13 +161,20 @@ script:
                 green: 100%
                 blue: 0%
                 brightness: 100%
+                transition_length: 0s
+            - delay: ${led_dur}
+            - light.turn_off:
+                id: light_rgb_1
+                transition_length: 0s
       - if:
           condition:
             and:
               - binary_sensor.is_off: ir_receiving
               - binary_sensor.is_off: ir_transmitting
           then:
-            - light.turn_off: light_rgb_1
+            - light.turn_off:
+                id: light_rgb_1
+                transition_length: 0s
 
 
 
